@@ -1014,12 +1014,12 @@ WELC_HELP_TXT = (
 )
 
 WELC_MUTE_HELP_TXT = (
-    "You can get the bot to mute new people who join your group and hence prevent spambots from flooding your group. "
-    "The following options are possible:\n"
-    "• `/welcomemute soft`*:* restricts new members from sending media for 24 hours.\n"
-    "• `/welcomemute strong`*:* mutes new members till they tap on a button thereby verifying they're human.\n"
-    "• `/welcomemute off`*:* turns off welcomemute.\n"
-    "*Note:* Strong mode kicks a user from the chat if they dont verify in 120seconds. They can always rejoin though"
+    "Вы можете заставить бота отключать новых людей, которые присоединяются к вашей группе, и, следовательно, предотвращать флуд вашей группы спам-ботами. "
+    "Возможны следующие варианты:\n"
+    "• `/welcomemute soft`*:* запрещает новым участникам отправлять медиа в течение 24 часов.\n"
+    "• `/welcomemute strong`*:* отключает звук для новых участников, пока они не нажмут на кнопку, тем самым подтверждая, что они люди.\n"
+    "• `/welcomemute off`*:* выключает тихое приветствие.\n"
+    "*Примечание:* Сильный режим выводит пользователя из чата, если он не подтвердит это в течение 120 секунд. Однако они всегда могут присоеденится"
 )
 
 
@@ -1063,23 +1063,23 @@ def __chat_settings__(chat_id, user_id):
 
 
 __help__ = """
-*Admins only:*
- ✪ /welcome <on/off>*:* enable/disable welcome messages.
- ✪ /welcome*:* shows current welcome settings.
- ✪ /welcome noformat*:* shows current welcome settings, without the formatting - useful to recycle your welcome messages!
- ✪ /goodbye*:* same usage and args as `/welcome`.
- ✪ /setwelcome <sometext>*:* set a custom welcome message. If used replying to media, uses that media.
- ✪ /setgoodbye <sometext>*:* set a custom goodbye message. If used replying to media, uses that media.
- ✪ /resetwelcome*:* reset to the default welcome message.
- ✪ /resetgoodbye*:* reset to the default goodbye message.
- ✪ /cleanwelcome <on/off>*:* On new member, try to delete the previous welcome message to avoid spamming the chat.
- ✪ /welcomemutehelp*:* gives information about welcome mutes.
- ✪ /cleanservice <on/off*:* deletes telegrams welcome/left service messages. 
+*Только для админов:*
+ ✪ /welcome <on/off>*:* включить/отключить приветственные сообщения.
+ ✪ /welcome*:* показать текущие настройки приветсвия.
+ ✪ /welcome noformat*:* показывает текущие настройки приветствия, без форматирования - полезно для переработки ваших приветственных сообщений!
+ ✪ /goodbye*:* то же использование команды что и `/welcome`.
+ ✪ /setwelcome <sometext>*:* Установить пользовательское приветственное сообщение. Если используется в ответе на медиа, используйте это медиа.
+ ✪ /setgoodbye <sometext>*:* Установить пользовательское прощальное сообщение. Если используется в ответе на медиа, используйте это медиа.
+ ✪ /resetwelcome*:* Вернуть приветственное сообщение по умолчанию.
+ ✪ /resetgoodbye*:* Вернуть прощальное сообщение по умолчанию.
+ ✪ /cleanwelcome <on/off>*:* При появление нового учестника, включится удаление предыдущего приветственного сообщения.
+ ✪ /welcomemutehelp*:* Предоставляет информацию о приветственных отключениях мута.
+ ✪ /cleanservice <on/off*:* Удаляет сообщения телеграмма о входе/выходе из группы участников. 
  *Example:*
-user joined chat, user left chat.
+user присоединился к чату, user покинул чат.
 
-*Welcome markdown:* 
- ✪ `/welcomehelp`*:* view more formatting information for custom welcome/goodbye messages.
+*Разметка для приветственных сообщений:* 
+ ✪ `/welcomehelp`*:* просмотр дополнительной информации о форматировании пользовательских приветственных/прощальных сообщений.
 """
 
 NEW_MEM_HANDLER = MessageHandler(Filters.status_update.new_chat_members, new_member)
