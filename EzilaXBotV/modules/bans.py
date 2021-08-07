@@ -155,7 +155,7 @@ def sban(update: Update, context: CallbackContext) -> str:
     try:
         member = chat.get_member(user_id)
     except BadRequest as excp:
-        if excp.message == "User not found":
+        if excp.message == "Пользователь не найден":
             return log_message
         else:
             raise
@@ -172,18 +172,18 @@ def sban(update: Update, context: CallbackContext) -> str:
     log = (
         f"<b>{html.escape(chat.title)}:</b>\n"
         f"#SBANNED\n"
-        f"<b>Admin:</b> {mention_html(user.id, html.escape(user.first_name))}\n"
-        f"<b>User:</b> {mention_html(member.user.id, html.escape(member.user.first_name))}"
+        f"<b>Администратор:</b> {mention_html(user.id, html.escape(user.first_name))}\n"
+        f"<b>Пользователь:</b> {mention_html(member.user.id, html.escape(member.user.first_name))}"
     )
     if reason:
-        log += "\n<b>Reason:</b> {}".format(reason)
+        log += "\n<b>Причина:</b> {}".format(reason)
 
     try:
         chat.kick_member(user_id)
         return log
 
     except BadRequest as excp:
-        if excp.message == "Reply message not found":
+        if excp.message == "Ответ на сообщение не найден":
             return log
         else:
             LOGGER.warning(update)
@@ -213,20 +213,20 @@ def temp_ban(update: Update, context: CallbackContext) -> str:
     user_id, reason = extract_user_and_text(message, args)
 
     if not user_id:
-        message.reply_text("I doubt that's a user.")
+        message.reply_text("Я сомневаюсь, что это пользователь.")
         return log_message
 
     try:
         member = chat.get_member(user_id)
     except BadRequest as excp:
-        if excp.message == "User not found":
-            message.reply_text("I can't seem to find this user.")
+        if excp.message == "Пользователь не найден":
+            message.reply_text("Кажется, я не могу найти этого пользователя.")
             return log_message
         else:
             raise
 
     if user_id == bot.id:
-        message.reply_text("I'm not gonna BAN myself, are you crazy?")
+        message.reply_text("Я не собираюсь ЗАБАНАТЬ себя, ты с ума сошел?")
         return log_message
 
     if is_user_ban_protected(chat, user_id, member):
@@ -234,7 +234,7 @@ def temp_ban(update: Update, context: CallbackContext) -> str:
         return log_message
 
     if not reason:
-        message.reply_text("You haven't specified a time to ban this user for!")
+        message.reply_text("Вы не указали время для бана этого пользователя на!")
         return log_message
 
     split_reason = reason.split(None, 1)
@@ -253,12 +253,12 @@ def temp_ban(update: Update, context: CallbackContext) -> str:
     log = (
         f"<b>{html.escape(chat.title)}:</b>\n"
         "#TEMP BANNED\n"
-        f"<b>Admin:</b> {mention_html(user.id, html.escape(user.first_name))}\n"
-        f"<b>User:</b> {mention_html(member.user.id, html.escape(member.user.first_name))}\n"
-        f"<b>Time:</b> {time_val}"
+        f"<b>Администратор:</b> {mention_html(user.id, html.escape(user.first_name))}\n"
+        f"<b>Пользователь:</b> {mention_html(member.user.id, html.escape(member.user.first_name))}\n"
+        f"<b>Время:</b> {time_val}"
     )
     if reason:
-        log += "\n<b>Reason:</b> {}".format(reason)
+        log += "\n<b>Причина:</b> {}".format(reason)
 
     try:
         chat.kick_member(user_id, until_date=bantime)
@@ -272,10 +272,10 @@ def temp_ban(update: Update, context: CallbackContext) -> str:
         return log
 
     except BadRequest as excp:
-        if excp.message == "Reply message not found":
+        if excp.message == "Ответ на сообщение не найден":
             # Do not reply
             message.reply_text(
-                f"Banned! User will be banned for {time_val}.", quote=False
+                f"Banned! Пользователь будет забанен на {time_val}.", quote=False
             )
             return log
         else:
@@ -287,7 +287,7 @@ def temp_ban(update: Update, context: CallbackContext) -> str:
                 chat.id,
                 excp.message,
             )
-            message.reply_text("Well damn, I can't ban that user.")
+            message.reply_text("Черт возьми, я не могу забанить этого пользователя.")
 
     return log_message
 
@@ -313,7 +313,7 @@ def stemp_ban(update: Update, context: CallbackContext) -> str:
     try:
         member = chat.get_member(user_id)
     except BadRequest as excp:
-        if excp.message == "User not found":
+        if excp.message == "Пользователь не найден":
             return log_message
         else:
             raise
@@ -325,7 +325,7 @@ def stemp_ban(update: Update, context: CallbackContext) -> str:
         return log_message
 
     if not reason:
-        message.reply_text("You haven't specified a time to ban this user for!")
+        message.reply_text("Вы не указали время для бана этого пользователя на!")
         return log_message
 
     split_reason = reason.split(None, 1)
@@ -344,12 +344,12 @@ def stemp_ban(update: Update, context: CallbackContext) -> str:
     log = (
         f"<b>{html.escape(chat.title)}:</b>\n"
         "#STEMP BANNED\n"
-        f"<b>Admin:</b> {mention_html(user.id, html.escape(user.first_name))}\n"
-        f"<b>User:</b> {mention_html(member.user.id, html.escape(member.user.first_name))}\n"
-        f"<b>Time:</b> {time_val}"
+        f"<b>Администратор:</b> {mention_html(user.id, html.escape(user.first_name))}\n"
+        f"<b>Пользователь:</b> {mention_html(member.user.id, html.escape(member.user.first_name))}\n"
+        f"<b>Время:</b> {time_val}"
     )
     if reason:
-        log += "\n<b>Reason:</b> {}".format(reason)
+        log += "\n<b>Причина:</b> {}".format(reason)
 
     try:
         chat.kick_member(user_id, until_date=bantime)
@@ -357,7 +357,7 @@ def stemp_ban(update: Update, context: CallbackContext) -> str:
         return log
 
     except BadRequest as excp:
-        if excp.message == "Reply message not found":
+        if excp.message == "Не найден ответ на сообщение":
             # Do not reply
             return log
         else:
@@ -388,24 +388,24 @@ def kick(update: Update, context: CallbackContext) -> str:
     user_id, reason = extract_user_and_text(message, args)
 
     if not user_id:
-        message.reply_text("I doubt that's a user.")
+        message.reply_text("Я сомневаюсь, что это пользователь.")
         return log_message
 
     try:
         member = chat.get_member(user_id)
     except BadRequest as excp:
         if excp.message == "User not found":
-            message.reply_text("I can't seem to find this user.")
+            message.reply_text("Кажется, я не могу найти этого пользователя.")
             return log_message
         else:
             raise
 
     if user_id == bot.id:
-        message.reply_text("Yeahhh I'm not gonna do that.")
+        message.reply_text("Даа, я не собираюсь этого делать.")
         return log_message
 
     if is_user_ban_protected(chat, user_id):
-        message.reply_text("I really wish I could kick this user....")
+        message.reply_text("Я действительно хотел бы кикнуть этого пользователя....")
         return log_message
 
     res = chat.unban_member(user_id)  # unban on current user = kick
@@ -419,16 +419,16 @@ def kick(update: Update, context: CallbackContext) -> str:
         log = (
             f"<b>{html.escape(chat.title)}:</b>\n"
             f"#KICKED\n"
-            f"<b>Admin:</b> {mention_html(user.id, html.escape(user.first_name))}\n"
-            f"<b>User:</b> {mention_html(member.user.id, html.escape(member.user.first_name))}"
+            f"<b>Администратор:</b> {mention_html(user.id, html.escape(user.first_name))}\n"
+            f"<b>Пользователь:</b> {mention_html(member.user.id, html.escape(member.user.first_name))}"
         )
         if reason:
-            log += f"\n<b>Reason:</b> {reason}"
+            log += f"\n<b>Причина:</b> {reason}"
 
         return log
 
     else:
-        message.reply_text("Well damn, I can't kick that user.")
+        message.reply_text("Черт возьми, я не могу кикнуть этого пользователя.")
 
     return log_message
 
@@ -454,7 +454,7 @@ def skick(update: Update, context: CallbackContext) -> str:
     try:
         member = chat.get_member(user_id)
     except BadRequest as excp:
-        if excp.message == "User not found":
+        if excp.message == "Пользователь не найден":
             return log_message
         else:
             raise
@@ -470,11 +470,11 @@ def skick(update: Update, context: CallbackContext) -> str:
         log = (
             f"<b>{html.escape(chat.title)}:</b>\n"
             f"#SKICKED\n"
-            f"<b>Admin:</b> {mention_html(user.id, html.escape(user.first_name))}\n"
-            f"<b>User:</b> {mention_html(member.user.id, html.escape(member.user.first_name))}"
+            f"<b>Админ:</b> {mention_html(user.id, html.escape(user.first_name))}\n"
+            f"<b>Пользователь:</b> {mention_html(member.user.id, html.escape(member.user.first_name))}"
         )
         if reason:
-            log += f"\n<b>Reason:</b> {reason}"
+            log += f"\n<b>Причина:</b> {reason}"
 
         return log
 
@@ -487,14 +487,14 @@ def skick(update: Update, context: CallbackContext) -> str:
 def kickme(update: Update, context: CallbackContext):
     user_id = update.effective_message.from_user.id
     if is_user_admin(update.effective_chat, user_id):
-        update.effective_message.reply_text("I wish I could... but you're an admin.")
+        update.effective_message.reply_text("Я бы хотед... но ты являешься администратором.")
         return
 
     res = update.effective_chat.unban_member(user_id)  # unban on current user = kick
     if res:
-        update.effective_message.reply_text("*kicks you out of the group*")
+        update.effective_message.reply_text("*кикнуть тебя из группы*")
     else:
-        update.effective_message.reply_text("Huh? I can't :/")
+        update.effective_message.reply_text("Я не могу :/")
 
 
 @run_async
@@ -513,28 +513,28 @@ def unban(update: Update, context: CallbackContext) -> str:
     user_id, reason = extract_user_and_text(message, args)
 
     if not user_id:
-        message.reply_text("I doubt that's a user.")
+        message.reply_text("Я сомневаюсь, что это пользователь.")
         return log_message
 
     try:
         member = chat.get_member(user_id)
     except BadRequest as excp:
-        if excp.message == "User not found":
-            message.reply_text("I can't seem to find this user.")
+        if excp.message == "Пользователь не найден":
+            message.reply_text("Я не могу найти этого пользователя.")
             return log_message
         else:
             raise
 
     if user_id == bot.id:
-        message.reply_text("How would I unban myself if I wasn't here...?")
+        message.reply_text("Как бы я разбанил себя, если бы меня здесь не было...?")
         return log_message
 
     if is_user_in_chat(chat, user_id):
-        message.reply_text("Isn't this person already here??")
+        message.reply_text("Разве этот человек уже не здесь??")
         return log_message
 
     chat.unban_member(user_id)
-    message.reply_text("Yep, this user can join!")
+    message.reply_text("Да, этот пользователь может присоединиться!")
 
     log = (
         f"<b>{html.escape(chat.title)}:</b>\n"
@@ -563,7 +563,7 @@ def selfunban(context: CallbackContext, update: Update) -> str:
     try:
         chat_id = int(args[0])
     except:
-        message.reply_text("Give a valid chat ID.")
+        message.reply_text("Дайте действительный чат ID.")
         return
 
     chat = bot.getChat(chat_id)
@@ -571,18 +571,18 @@ def selfunban(context: CallbackContext, update: Update) -> str:
     try:
         member = chat.get_member(user.id)
     except BadRequest as excp:
-        if excp.message == "User not found":
-            message.reply_text("I can't seem to find this user.")
+        if excp.message == "Пользователь не найден":
+            message.reply_text("Кажется, я не могу найти этого пользователя.")
             return
         else:
             raise
 
     if is_user_in_chat(chat, user.id):
-        message.reply_text("Aren't you already in the chat??")
+        message.reply_text("Разве ты еще не в чате??")
         return
 
     chat.unban_member(user.id)
-    message.reply_text("Yep, I have unbanned you.")
+    message.reply_text("Да, я разбанил тебя.")
 
     log = (
         f"<b>{html.escape(chat.title)}:</b>\n"
@@ -600,14 +600,14 @@ __help__ = """
  ✪ /kickme*:* Kicks the user who used the command.
  
 *Bans:*
- ✪ /ban <userhandle>*:* Bans a user. (via handle, or reply)
- ✪ /sban <userhandle>*:* Silently bans a user without leaving any message. (via handle, or reply)
- ✪ /tban <userhandle> x(m/h/d)*:* Bans a user for `x` time. (via handle, or reply). `m` = `minutes`, `h` = `hours`, `d` = `days`.
- ✪ /stban <userhandle> x(m/h/d)*:* Silently bans a user for `x` time. (via handle, or reply). `m` = `minutes`, `h` = `hours`, `d` = `days`.
- ✪ /unban <userhandle>*:* Unbans a user. (via handle, or reply)
+ ✪ /ban <userhandle>*:* Забанить пользователя. (через имя, или ответ)
+ ✪ /sban <userhandle>*:* Тихо забанить пользователя не оставляя сообщения. (через имя, или ответ)
+ ✪ /tban <userhandle> x(m/h/d)*:* Забанить пользователя на `x` время. (через имя, или ответ). `m` = `minutes`, `h` = `hours`, `d` = `days`.
+ ✪ /stban <userhandle> x(m/h/d)*:* Тихо забанить пользователя на `x` время. (через имя, или ответ). `m` = `minutes`, `h` = `hours`, `d` = `days`.
+ ✪ /unban <userhandle>*:* Разбанить пользователя. (через имя, или ответ)
 
 _NOTE:_
- If you set Log Channels, you will get logs of Silent kick and bans. Check *Logger* module to know more about Log Channel.
+ Если вы установите Лог-каналы, то получите логи Бесшумных банов и киках. Проверьте модуль *Logger* , чтобы узнать больше о канале журнала.
 """
 
 BAN_HANDLER = CommandHandler("ban", ban)
