@@ -49,7 +49,7 @@ async def is_administrator(user_id: int, message):
 
 @telethn.on(events.NewMessage(pattern=f"^[!/]zombies ?(.*)"))
 async def zombies(event):
-    """For .zombies command, list all the zombies in a chat."""
+    """Для команды .zombies, перечислите всех зомби в чате."""
 
     con = event.pattern_match.group(1).lower()
     del_u = 0
@@ -64,7 +64,7 @@ async def zombies(event):
                 await sleep(1)
         if del_u > 0:
             del_status = f"Найдено **{del_u}** зомби в этой группе.\
-            \nClean Them By Using - `/zombies clean`"
+            \nОчисти их с помощью - `/zombies clean`"
         await find_zombies.edit(del_status)
         return
 
