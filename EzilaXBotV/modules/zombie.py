@@ -106,6 +106,6 @@ async def zombies(event):
 
     if del_a > 0:
         del_status = f"Очищено `{del_u}` зомби \
-        \n`{del_a}` Учетные Записи Администратора Зомби Не Удаляются!"
+        \n`{del_a}` Учетные записи администратора зомби не удаляются!"
 
     await cleaning_zombies.edit(del_status)
